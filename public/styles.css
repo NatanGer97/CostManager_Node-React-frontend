@@ -1,0 +1,76 @@
+body {
+  /* padding: 5rem;
+  margin: 5rem;
+  */
+
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.btn-link {
+  text-decoration: none;
+}
+button.user-dropdown-icon {
+  
+  border: none;
+  background: none;
+  
+
+  
+  /* border-radius: 50%; */
+}
+
+.nav-link {
+  cursor: pointer;
+}
+
+.login-page {
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: #eeeeee;
+}
+.login-btn {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 50px;
+}
+.alert-section
+{
+  font-size: smaller;
+  line-height: 1rem;
+}
+.login-form {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 50px;
+
+  padding: 100px;
+  margin: 100px;
+  
+}
+.form-floating {
+  justify-content: center;
+  display: in;
+}
+
+header {
+  padding-bottom: 5rem;
+  
+}
+
+.login-page-header {
+  background-color: #eeeeee;
+  position: absolute;
+
+}
+
+a.back-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  text-decoration: none;
+}
+a.back-link:hover {
+  text-decoration: underline;
+}
