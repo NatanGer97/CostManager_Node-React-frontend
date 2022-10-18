@@ -13,10 +13,10 @@ export const NavBar = (props) => {
           <span>Cost Manager</span>
         </a>
         <div className=" d-flex">
-          <ul className="nav">
+          {/* <ul className="nav">
             <NavBarLink linkTitle={"Costs"} to={"/all-costs"} />
          
-          </ul>
+          </ul> */}
         </div>
         <NavBarLinks />
 

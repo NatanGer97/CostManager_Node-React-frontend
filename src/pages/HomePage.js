@@ -9,6 +9,7 @@ import "./HomePage.css";
 const HomePage = (props) => {
   const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
+  const date = new Date().toLocaleDateString();
   let user = {};
 
   const fetchUserData = async () => {
@@ -33,9 +34,20 @@ const HomePage = (props) => {
   return (
     <div className="container ">
       <div className="main-section shadow ">
-      <h4>{currentUser.name}</h4>
+        <div className="content-div">
+          <h2 className="">
+            Welcome <span>{currentUser.name}</span>
+          </h2>
+          <h5 className="mt-2 d-flex">{date}</h5>
+          <a
+            style={{ textDecoration: "none" }}
+            className="btn-grad-index-page  w-50 m-3 rounded-pill"
+            href="/login"
+          >
+            View Costs
+          </a>
+        </div>
       </div>
-      
     </div>
   );
 };

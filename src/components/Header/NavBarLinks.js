@@ -66,7 +66,11 @@ const NavBarLinks = () => {
             <h6 className="dropdown-header">{currentUser.name}</h6>
           </li>
           <li className="dropdown-item">
-            <a href="/user">Profile</a>
+            <a style={{textDecoration:'none'}}href="/home">Profile</a>
+          </li>
+          <li className="dropdown-item">
+          <NavBarLink linkTitle={"My Costs"} to={"/all-costs"} />
+
           </li>
           <li>
             <hr className="dropdown-divider" />

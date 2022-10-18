@@ -2,8 +2,22 @@
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
     width: 100%;
     height: min-content;
-    padding: 200px;
-    border-radius: 50px;
+    padding: 100px;
+    border-radius: 50px;    
     
+}
+
+.content-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+    
+  
+}
+
+.date-div {
+    display: flex;
+    flex-direction: column;
     
 }
