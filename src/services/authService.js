@@ -33,12 +33,14 @@ const login = async (username, password) =>
 const logout = () =>
 {
     localStorage.removeItem('user');
+     window.location.reload();
 
 }
 
 const getCurrentUser = () => {
     
-    return JSON.parse(localStorage.getItem("user"));
+     const userToken = JSON.parse(localStorage.getItem("user"));
+     return userToken;
   };
 
 const getIdFromToken = () =>

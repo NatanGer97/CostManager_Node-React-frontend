@@ -9,12 +9,9 @@ body {
   text-decoration: none;
 }
 button.user-dropdown-icon {
-  
   border: none;
   background: none;
-  
 
-  
   /* border-radius: 50%; */
 }
 
@@ -35,8 +32,7 @@ button.user-dropdown-icon {
   -webkit-backdrop-filter: blur(5px);
   border-radius: 50px;
 }
-.alert-section
-{
+.alert-section {
   font-size: smaller;
   line-height: 1rem;
 }
@@ -47,7 +43,6 @@ button.user-dropdown-icon {
 
   padding: 100px;
   margin: 100px;
-  
 }
 .form-floating {
   justify-content: center;
@@ -56,13 +51,11 @@ button.user-dropdown-icon {
 
 header {
   padding-bottom: 5rem;
-  
 }
 
 .login-page-header {
   background-color: #eeeeee;
   position: absolute;
-
 }
 
 a.back-link {
@@ -73,4 +66,10 @@ a.back-link {
 }
 a.back-link:hover {
   text-decoration: underline;
+}
+
+.nav-bar {
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+ 
 }

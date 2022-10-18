@@ -16,7 +16,7 @@
   align-items: center;
 }
          
-.btn-grad {
+.btn-grad-index-page {
     background-image: linear-gradient(to right, #314755 0%, #26a0da  51%, #314755  100%);
     margin: 10px;
     padding: 15px 45px;
@@ -30,7 +30,7 @@
     display: block;
   }
 
-  .btn-grad:hover {
+  .btn-grad-index-page:hover {
     background-position: right center; /* change the direction of the change here */
     color: #fff;
     text-decoration: none;

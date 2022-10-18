@@ -2,7 +2,6 @@ import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { FiAlertTriangle } from "react-icons/fi";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../Context/UserContext";
 import AuthService from "../services/authService";
 import AuthErrorAlert from "./Alerts/AuthErrorAlert";
 
@@ -33,7 +32,6 @@ const passwordReducer = (state, action) => {
 };
 
 function LoginForm() {
-  const BASE_URL = "http://localhost:3000";
 
   const navigate = useNavigate();
   const [usernameState, dispatchUsername] = useReducer(usernameReducer, {
@@ -54,7 +52,6 @@ function LoginForm() {
   const usernameRef = useRef();
   const passwordRef = useRef();
 
-  const userContext = useContext(UserContext);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -96,7 +93,6 @@ function LoginForm() {
     try {
       const loginResponse = await AuthService.login(email, password);
       if (loginResponse.status === 200) {
-        userContext.decodeToken(loginResponse.data.token);
         navigate("/home");
       }
     } catch (error) {
@@ -117,35 +113,7 @@ function LoginForm() {
     }
   };
 
-  const loginHandler = async (event) => {
-    event.preventDefault();
-    let formData = new FormData();
-
-    formData.append("email", usernameRef.current.value);
-    formData.append("password", passwordRef.current.value);
-    const sendObj = {
-      user: {
-        email: usernameRef.current.value,
-        password: passwordRef.current.value,
-      },
-    };
-
-    const reqOptions = {
-      method: "post",
-      body: JSON.stringify(sendObj),
-      headers: { "Content-Type": "application/json" },
-    };
-
-    try {
-      const response = await fetch(`${BASE_URL}/login`, reqOptions);
-      console.log(await response.json());
-      if (response.ok) {
-        navigate("/");
-      }
-    } catch (err) {
-      alert(err);
-    }
-  };
+ 
   return (
     <main>
       <form className="login-form  shadow   ">

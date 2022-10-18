@@ -3,38 +3,48 @@ import AuthService from "../../services/authService";
 import UserService from "../../services/userService";
 import jwt_decode from "jwt-decode";
 import Avatar from "@mui/material/Avatar";
-import { FaUser } from "react-icons/fa";
+import { FaRegFileCode, FaUser } from "react-icons/fa";
+import {ImProfile} from 'react-icons/im';
 
 import NavBarLink from "./NavBarLink";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import userAvatar from "../../assets/pictures/user.png";
 
 const NavBarLinks = () => {
   
+  const [currentUser, setCurrentUser] = useState({});
+
   const [showLogin, setShowLogin] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const navigate = useNavigate();
-  let currentUser = AuthService.getCurrentUser();
+  
   
 
-  const fetchUserData = async (decodedToken) => {
-    const results = await UserService.getUserInfo(decodedToken.id);
-   
-    // setCurrentUser(results.data.user.name.split(" ")[0]);
-    // console.log(results.data.user);
-  };
+  const fetchUserData = async() => 
+  {
+    try {
+      const user  = await UserService.getUserInfo();
+      setCurrentUser(currentUser => ({
+        ...currentUser, ...user
+      }));
+    }
+    catch(error)
+    {
+      // alert("navbar links", error);
+      return <Navigate to={"/"} /> 
+    }
+  
+  }
+  
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     
-
+    
     if (user) {
-      const decodedToken = jwt_decode(user.token);
-
-      fetchUserData(decodedToken);
       setShowLogin(false);
       setShowLogout(true);
+      fetchUserData();
       
-      // console.log(currentUser);
     } else {
       setShowLogin(true);
     }
@@ -48,7 +58,9 @@ const NavBarLinks = () => {
 
   return (
     <ul className="nav ">
-      <li className="nav-item dropdown">
+      <NavBarLink linkTitle={"Costs"} to={"/all-costs"} />
+      
+      <li className="nav-item dropdown ">
         <button
           className="nav-link  user-dropdown-icon"
           href="#"
@@ -58,10 +70,11 @@ const NavBarLinks = () => {
         >
           <FaUser />
         </button>
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu text-center">
           <li>
-            <h6 className="dropdown-header">{currentUser['email']}</h6>
+            <h6 className="dropdown-header">{currentUser.name}</h6>
           </li>
+          <li className="dropdown-item"><a href="/user">Profile</a></li>
           <li>
             <hr className="dropdown-divider" />
           </li>
@@ -73,9 +86,11 @@ const NavBarLinks = () => {
           )}
         </ul>
       </li>
-      {showLogin && <NavBarLink linkTitle={"Login"} to={"login"} />}
+      
+
+      
     </ul>
   );
 };
 
-export default NavBarLinks;
+export default NavBarLinks
