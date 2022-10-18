@@ -18,9 +18,7 @@ const CostsPage = () => {
     setCosts(entities.costs);
   }, [dispatch, entities.costs]);
 
-  const fetchCosts = () => {
-    console.log(entities.expenses);
-  };
+
 
   return (
     <div className="container">
@@ -33,7 +31,6 @@ const CostsPage = () => {
       {loading ? <LoadingSpinner /> : <CostsTable costs={entities.expenses} />}
       {/* <CostsTable costs={entities.expenses} /> */}
 
-      <button onClick={fetchCosts}>getCosts</button>
     </div>
   );
 };

@@ -40,6 +40,8 @@ const logout = () =>
 const getCurrentUser = () => {
     
      const userToken = JSON.parse(localStorage.getItem("user"));
+     if (!userToken) {
+     }
      return userToken;
   };
 

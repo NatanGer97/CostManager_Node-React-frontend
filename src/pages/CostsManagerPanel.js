@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom"
 
-const CostsManagementPanel = () =>
+const CostsManagementPanel = (props) =>
 {
     return (
-        <div className="container-fluid">
-            <Outlet />
+        <div className="container">
+        <Outlet />
+
         </div>
     );
 }

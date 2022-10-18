@@ -11,7 +11,7 @@ import axios from "axios";
 import AuthService from "../../services/authService";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import authHeader from "../../services/auth-header";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ToastAlert from "../../components/Alerts/Toast";
 import { useDispatch, useSelector } from "react-redux";
 import { postCost } from "../../store/costsSlice";
@@ -60,11 +60,14 @@ function NewCostForm() {
   );
   const sumRef = useRef();
   const descriptionRef = useRef();
+  const { costId } = useParams();
+
   const [isFormValid, setIsFormValid] = useState(false);
   const [loading, setIsLoading] = useState(false);
-  const [successAdded, setSuccessAdded] = useState(false);
+  const [updateMode, setUpdateMode] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
+  const [costToUpdate, setCostToUpdate] = useState({});
 
   const { loading: postCostLoadingStatus } = useSelector(
     (state) => state.costs
@@ -85,15 +88,33 @@ function NewCostForm() {
       })
       .catch((error) => setError(error.message));
   }
+  const fetchCost = async () => {
+    try {
+      setIsLoading(true);
+      const fetchCostResponse = await CostsService.fetchCost(costId);
+      console.log(fetchCostResponse.expense);
+      setCostToUpdate(fetchCostResponse.expense);
+    } catch (error) {
+      console.log(error.message);
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     console.log("fetch-categories");
+    if (window.location.pathname.endsWith("/edit")) {
+      setUpdateMode(true);
+      fetchCost();
+    }
+    if (updateMode) setIsFormValid(true)
     fetchCategories();
   }, []);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setIsFormValid(isDescriptionValid && isSumValid);
+      setIsFormValid(isDescriptionValid && isSumValid || updateMode);
     }, 500);
 
     return () => {
@@ -108,30 +129,30 @@ function NewCostForm() {
   };
 
   const addCostHandler = async (event) => {
-    const URL = "http://localhost:3000/expenses";
-    
-
     event.preventDefault();
     const sum = sumRef.current.value;
     const description = descriptionRef.current.value;
-    const userId = AuthService.getIdFromToken();
+    let response = {};
+    if (updateMode) {
+      response = await CostsService.updateCost({
+        costId: costId,
+        sum: sum,
+        description: description,
+      });
+    } else {
+      response = await CostsService.addCost({
+        category: selectedCategory,
+        sum: sum,
+        description: description,
+      });
+    }
 
-   const response =  await CostsService.addCost({
-      category: selectedCategory,
-      sum: sum,
-      description: description,
-    });
-
-    if(response === 201){
+    if (response === 201 || response === 200) {
       navigate("/all-costs");
-    }
-
-    else {
+    } else {
       console.log(response);
-      setError(response)
+      setError(response);
     }
-
-    
 
     /*  try {
       const response = await axios.post(`${URL}/${selectedCategory}/${userId}`,
@@ -167,9 +188,10 @@ function NewCostForm() {
   return (
     <div className="container">
       {error && <GeneralAlert error={error} />}
-      {loading && <LoadingSpinner />}
 
       <form className="new-cost-form">
+        {loading && <LoadingSpinner />}
+
         <Row className="g-2">
           <Col md>
             <FloatingLabel controlId="floatingInputGrid" label="Sum">
@@ -180,6 +202,7 @@ function NewCostForm() {
                 onChange={sumChangeHandler}
                 onBlur={validateSumHandler}
                 ref={sumRef}
+                defaultValue={updateMode ? costToUpdate.sum : ""}
               />
             </FloatingLabel>
           </Col>
@@ -189,7 +212,7 @@ function NewCostForm() {
                 onChange={categorySelectHandler}
                 aria-label="Floating label select example"
               >
-                <option></option>
+                <option>{updateMode ? costToUpdate.category : null}</option>
                 {categories &&
                   categories.map((category) => (
                     <option key={category._id} value={category._id}>
@@ -211,6 +234,8 @@ function NewCostForm() {
                   ref={descriptionRef}
                   onBlur={validateDescription}
                   onChange={descriptionChangeHandler}
+                  defaultValue={updateMode ? costToUpdate.description : ""}
+
                 />
               </FloatingLabel>
             </Col>
@@ -219,10 +244,10 @@ function NewCostForm() {
         <Row>
           <button
             className="btn-grad "
-            onClick={addCostHandler}
+            onClick={updateMode ? addCostHandler : addCostHandler}
             disabled={!isFormValid}
           >
-            Add
+            {updateMode ? "Update" : "Add"}
           </button>
         </Row>
       </form>

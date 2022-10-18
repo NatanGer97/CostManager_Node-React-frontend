@@ -10,7 +10,7 @@ const NavBarLink = (props) =>
         <NavLink
         className={"nav-link"}
           to={props.to}
-          style={({ isActive }) => (isActive ? activeStyle : undefined)}
+          /* style={({ isActive }) => (isActive ? activeStyle : undefined)} */
         >
           {props.linkTitle}
         </NavLink>

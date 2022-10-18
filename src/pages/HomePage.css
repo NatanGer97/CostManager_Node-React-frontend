@@ -1,0 +1,9 @@
+.main-section {
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    width: 100%;
+    height: min-content;
+    padding: 200px;
+    border-radius: 50px;
+    
+    
+}

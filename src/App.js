@@ -11,6 +11,7 @@ import CostsTable from "./pages/Costs/CostsTable";
 import NewCostForm from "./pages/Costs/NewCostForm";
 import CostsManagementPanel from "./pages/CostsManagerPanel";
 import { costsReducer } from "./store/costsSlice";
+import Cost from "./pages/Costs/Cost";
 
 function App() {
   return (
@@ -24,14 +25,19 @@ function App() {
             <Route path="/user" element={<UserPage />} />
             <Route path="/all-costs" element={<CostsPage />}/>
             <Route path="/new-cost" element={<NewCostForm />} />
-
           </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/costs" element={<CostsManagementPanel />} >
+            <Route path=":costId" element={<Cost />} />
+            <Route path=":costId/edit" element={<NewCostForm />} />
+            </Route>
+          </Route>
+
 
           <Route path="/login" element={<LoginPage title={"Login"} />} />
           <Route path="/register" element={<LoginPage title={"Register"} />} />
         </Routes>
       </div>
-      <div>{/* <AuthVerify /> */}</div>
     </div>
   );
 }
