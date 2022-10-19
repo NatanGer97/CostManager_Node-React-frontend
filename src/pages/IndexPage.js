@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const IndexPage = (props) =>
 {
     return (
-          <div className='container'>
+          <div className='container-index'>
             <div className='container-login shadow-lg'>
                <div className=''><BsShieldLock size={100} /></div>
              
