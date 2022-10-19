@@ -12,6 +12,7 @@ import NewCostForm from "./pages/Costs/NewCostForm";
 import CostsManagementPanel from "./pages/CostsManagerPanel";
 import { costsReducer } from "./store/costsSlice";
 import Cost from "./pages/Costs/Cost";
+import NewCategoryForm from "./components/Category/NewCategoryForm";
 
 function App() {
   return (
@@ -26,7 +27,9 @@ function App() {
             <Route path="/all-costs" element={<CostsPage />}/>
             <Route path="/new-cost" element={<NewCostForm />} />
           </Route>
+
           <Route element={<ProtectedRoute />}>
+            <Route path="/new-category" element={<NewCategoryForm />} />
             <Route path="/costs" element={<CostsManagementPanel />} >
             <Route path=":costId" element={<Cost />} />
             <Route path=":costId/edit" element={<NewCostForm />} />

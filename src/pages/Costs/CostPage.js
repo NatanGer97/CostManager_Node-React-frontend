@@ -9,7 +9,7 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const CostsPage = () => {
   const [costs, setCosts] = useState([]);
-  
+
   const dispatch = useDispatch();
   const { entities, loading } = useSelector((state) => state.costs);
 
@@ -22,14 +22,15 @@ const CostsPage = () => {
   return (
     <div className="container">
       <h2 className="text-center">Costs</h2>
-      <div className="d-flex float-end m-3">
+      <div className="d-flex justify-content-around mb-3">
+        <a href="/new-category" className="btn btn btn-outline-primary">
+          <i class="bi bi-plus-circle"></i> <span>New Category</span>
+        </a>
         <a href="/new-cost" className="btn btn btn-outline-primary">
-        <i class="bi bi-plus-circle"></i> <span>New Cost</span>
-
+          <i class="bi bi-plus-circle"></i> <span>New Cost</span>
         </a>
       </div>
       {loading ? <LoadingSpinner /> : <CostsTable costs={entities.expenses} />}
-      {/* <CostsTable costs={entities.expenses} /> */}
     </div>
   );
 };
